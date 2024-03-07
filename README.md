@@ -1,4 +1,4 @@
-# Good Reads 
+# Proyecto 1 
 
 En este primer proyecto vamos a desarrollar una applicación web sencilla
 utilizando solamente la librería estándar de python y *Redis* un almacen de
@@ -43,11 +43,6 @@ páginas que hasta este momento son estáticas.
 
 ### Sesiones
 
-#### Lecturas Relacionadas
-* [Using HTTP Cookies MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
-* [Librería http.cookies de Python](https://docs.python.org/3/library/http.cookies.html)
-* [Types of attacks MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Types_of_attacks)
-  
 #### Una sesión para cada usuario
 
 Utilizando Cookies, genera una sesión distinta para cada usuario que llegue al
@@ -56,13 +51,7 @@ de sesión al final de la página. La sesión debe vencer en 10 segundos.
 
 Es una buena idea utilizar un generador de identificadores para que cada número
 de sesión sea único. Puedes utilizar el módulo
-[uuid](https://docs.python.org/3/library/uuid.html#uuid.uuid4). 
-
-#### Preguntas de repaso
-Según las lecturas: 
-* ¿Qué tipo de ataque se trata de evitar al crear nuevas cookies para cada sesión?. 
-* ¿Qué otros atriburos son importantes para la seguridad de las cookies cuándo se usan para sesiones?
-* ¿Cómo evitamos un ataque de CSRF?
+[uuid](https://docs.python.org/3/library/uuid.html#uuid.uuid4).
 
 
 #### Rastreo de la navegación 
