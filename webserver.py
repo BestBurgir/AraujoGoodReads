@@ -13,13 +13,29 @@ import uuid
 
 mappings = [
     (r"^/books/(?P<book_id>\d+)$", "get_book"),
-    (r"^/book/(?P<book_id>\d+)$", "get_book"),
+    (r"^/search", "search"),
     (r"^/$", "index"),
 ]
 
 r = redis.StrictRedis(host="localhost", port=6379, db=0)
 
 class WebRequestHandler(BaseHTTPRequestHandler):
+
+    @property
+    def url(self):
+        return urlparse(self.path)
+
+    @property
+    def query_data(self):
+        return dict(parse_qsl(self.url.query))
+
+    def search(self):
+        self.send_response(200)
+        self.send_header("content-type", "text/html")
+        self.end_headers()
+        index_page = f"<h1>{self.path}</h1>".encode("utf-8")
+        self.wfile.write(index_page)
+
     def cookies(self):
         return SimpleCookie(self.headers.get("Cookie"))
     
@@ -62,18 +78,30 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.end_headers()
-        index_page = "<h1>Bienvenidos a los Libros </h1>".encode("utf-8")
+        index_page = """
+        <h1>Bienvenidos a los Libros </h1>
+        <form action="/search" method="get">
+            <input type="text" name="q" />
+            <input type="submit" value="Buscar Libro" />
+        </form>
+        """.encode("utf-8")
         self.wfile.write(index_page)
 
     def get_book(self, book_id):
         session_id = self.get_session()
+        r.lpush(f"session:{session_id}", f"book:{book_id}")
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.write_session_cookie(session_id)
         self.end_headers()
         #book_info = f"<h1> Info de Libro {book_id} es correcto </h1>".encode("utf-8")
         book_info = r.get(f"book_id:{book_id}") or "No existe el libro".encode("utf-8")
-        self.wfile.write(book_info)
+        self.wfile.write(str(book_info).encode("utf-8"))
+        self.wfile.write(f"session:{session_id}".encode()("utf-8"))
+        book_list = r.lrange(f"session:{session_id}", 0, -1)
+        for book in book_list:
+            self.wfile.write(f"book:{book}".encode("utf-8"))
+
 
     # def get_response(self):
     #     return f"""
