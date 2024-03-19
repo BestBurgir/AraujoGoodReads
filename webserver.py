@@ -13,7 +13,7 @@ import uuid
 
 mappings = [
     (r"^/books/(?P<book_id>\d+)$", "get_book"),
-    (r"^/search", "search"),
+    (r"^/search", "get_by_search"),
     (r"^/$", "index"),
 ]
 
@@ -31,9 +31,9 @@ class WebRequestHandler(BaseHTTPRequestHandler):
 
     def search(self):
         self.send_response(200)
-        self.send_header("content-type", "text/html")
+        self.send_header("content-type","text/html")
         self.end_headers()
-        index_page = f"<h1>{self.path}</h1>".encode("utf-8")
+        index_page = f"<h1>{self.query_data['q'].split()}</h1>".encode("utf-8")
         self.wfile.write(index_page)
 
     def cookies(self):
@@ -59,7 +59,7 @@ class WebRequestHandler(BaseHTTPRequestHandler):
     def url_mapping_response(self):
         for pattern, method in mappings:
             match = self.get_params(pattern, self.path)
-            print(match)  # {'book_id': '1'}
+            # print(match)  # {'book_id': '1'}
             if match is not None:
                 md = getattr(self, method)
                 md(**match)
@@ -78,29 +78,89 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.end_headers()
-        index_page = """
-        <h1>Bienvenidos a los Libros </h1>
-        <form action="/search" method="get">
-            <input type="text" name="q" />
-            <input type="submit" value="Buscar Libro" />
-        </form>
-        """.encode("utf-8")
-        self.wfile.write(index_page)
+        with open('html/index.html') as f:
+            response = f.read()
+        self.wfile.write(response.encode("utf-8"))   
+        # index_page = """
+        # <h1>Bienvenidos a los Libros </h1>
+        # <form action="/search" method="get">
+        #     <input type="text" name="q" />
+        #     <input type="submit" value="Buscar Libro" />
+        # </form>
+        # """.encode("utf-8")
+        # self.wfile.write(index_page)
+
+    def get_by_search(self):
+        if self.query_data and 'q' in self.query_data:
+            booksInter = r.sinter(self.query_data['q'].split(' '))
+            lista = []
+
+            # print(booksInter)
+            # Decodificar los resultados y agregarlos a la lista
+            for b in booksInter:
+                y = b.decode()
+                lista.append(y)
+        
+            # Si no se encontraron libros, redirigir a get_index
+            if not lista:
+                self.index()
+            else:
+                # Si se encontraron libros, procesar cada uno
+                for book in lista:
+                    self.get_book(book)
+
+        # Configurar la respuesta HTTP para indicar éxito
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+
+
+    def get_recomendation(self,session_id, book_id):
+        books=r.lrange(f"session:{session_id}",0,-1)
+        # print(session_id, books)
+
+        books_read = {book.decode('utf-8').split(':')[1] for book in books}
+
+        all_books = {'1','2','3','4','5'}
+
+        books_to_recommend = all_books-books_read
+        if len(books_read)>=3:
+            if books_to_recommend:
+                return f"Te recomendamos leer el libro : {books_to_recommend.pop()}"
+            else: 
+                return "Ya has leido todos los libros"
+        else:
+            return "Lee el menos tres libros para obtener recomendaciones"
 
     def get_book(self, book_id):
         session_id = self.get_session()
         r.lpush(f"session:{session_id}", f"book:{book_id}")
+        book_recomendation = self.get_recomendation(session_id, book_id)
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.write_session_cookie(session_id)
         self.end_headers()
+
         #book_info = f"<h1> Info de Libro {book_id} es correcto </h1>".encode("utf-8")
-        book_info = r.get(f"book_id:{book_id}") or "No existe el libro".encode("utf-8")
+        book_info = r.get(f"book:{book_id}")
+
+        if book_info is not None:
+            book_info=book_info.decode('utf-8')
+        else:
+            book_info = "<h1>No existe el libro</h1>"    
+
+        #book_info=book_info + f"session id:{session_id}".encode("utf-8")
         self.wfile.write(str(book_info).encode("utf-8"))
-        self.wfile.write(f"session:{session_id}".encode()("utf-8"))
-        book_list = r.lrange(f"session:{session_id}", 0, -1)
+        
+        self.wfile.write(f"session:{session_id}\n".encode("utf-8"))
+        
+        book_list=r.lrange(f"session:{session_id}",0,-1)
         for book in book_list:
-            self.wfile.write(f"book:{book}".encode("utf-8"))
+            book_id = book.decode('utf-8')
+            self.wfile.write(book_id.encode('utf-8'))
+
+        if book_recomendation:
+           self.wfile.write(f"<p>Recomendacion:{book_recomendation}</p>\n".encode('utf-8'))
 
 
     # def get_response(self):

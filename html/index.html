@@ -8,19 +8,33 @@
     </head>
     <body>
     <h1>La Biblioteca</h1>       
-    
+   
+    <form action = "/search" method = "GET">
+        <label for ="q" >Search</label>
+        <input type="text" name="q"/>
+        <input type = "submit" value = "Buscar libros">
+    </form>     
     <article>
-            <h2><a href="\books\book1.html"> C# avanzado </a></h2>
-            <p> Pedro López, Juan Ruiz </p>
-            <br> 
-            <h2><a href="\books\book2.html"> El nuevo sistema operativo MS-DOS</a></h2>
-            <p> Joe Medina </p>
-            <br> 
-            <h2><a href="\books\book3.html"> La Metamorfosis </a></h2>
-            <p> Patrick Alvarado </p>
-            <br> 
-            <h2><a href="\books\book4.html"> La Danza de Hielo y Fuego </a></h2>
-            <p> R.R. González </p>
+        <h2><a href="/books/1"> C# avanzado </a></h2>
+        <img src="https://th.bing.com/th/id/OIP.qNYHiApr1UE0wgOK-KZpFwAAAA?w=350&h=500&rs=1&pid=ImgDetMain" width="300">
+        <p> Pedro López, Juan Ruiz </p>
+        <br> 
+        <h2><a href="/books/2"> El nuevo sistema operativo MS-DOS</a></h2>
+        <p> Joe Medina </p>
+        <img src="https://s2.studylib.es/store/data/006974452_1-04aaf8228a43d24dd74d9776f9a18a35-768x994.png" width="300">
+        <br> 
+        <h2><a href="/books/3"> La Metamorfosis </a></h2>
+        <p> Patrick Alvarado </p>
+        <img src="https://www.thoughtco.com/thmb/MowVSLZHLgo2mAgtrKcT2UVqar8=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/la-metamorfosis-Austral-56a5a5495f9b58b7d0ddcfee.jpg" width="300">
+        <br> 
+        <h2><a href="/books/4"> La Danza de Hielo y Fuego </a></h2>
+        <img src="https://i.pinimg.com/originals/16/0e/2d/160e2d0e8cdb169b15e6bbfc6cf0cade.jpg" width="300">
+
+        <p> R.R. González </p>
+        <br>
+        <h2><a href="/books/5"> La odisea </a></h2>
+        <img src="https://www.combeleditorial.com/cache/0/a/3/e/6/0a3e6e7f3901cf2322b0c394b2e493ba81386af5.jpeg?v=20170510" width="300">
+        <p>Homero</p>
     </article>
     </body>
 </html>
