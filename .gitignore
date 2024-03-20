@@ -3,3 +3,6 @@ node_modules/
 
 # Public folder
 public/
+
+# package-lock.json
+package-lock.json
