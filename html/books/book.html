@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}Librería{% endblock %}
+
+{% block content %}
+    <!-- Prueba -->
+    
+    <div class="dark:bg-gray-900">
+        <div class="mx-auto container w-full flex items-center md:flex-row flex-col justify-between px-6 lg:px-0">
+          <div class="flex flex-col justify-start items-start lg:w-2/5 px-2 lg:px-0">
+            <div class="md:mt-3">
+              <p class="text-gray-800 dark:text-white lg:text-4xl text-3xl font-extrabold leading-9">{{book.title}}</p>
+            </div>
+            <div class="md:mt-3">
+              <p class="lg:text-base text-sm leading-normal text-gray-600 dark:text-gray-300">{{book.description}}</p>
+            </div>
+            <div class="grid grid-cols-1 mt-8 gap-y-6">
+              <div>
+                <p class="text-gray-800 dark:text-white text-sm lg:text-base font-medium leading-none">Autor: <span class="font-semibold md:font-medium">{{book.author}}</span></p>
+              </div>
+              <div>
+                <p class="text-gray-800 dark:text-white text-sm lg:text-base font-medium leading-none">Lanzamiento: <span class="font-semibold md:font-medium">{{book.year}}</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center items-center lg:w-2/5 mt-10 md:mt-0">
+            <img class="w-full" src="{{book.url_img}}" alt="laptops" />
+          </div>
+        </div>
+        <div class="mx-auto container w-full flex xl:flex-row flex-col justify-between items-start mt-12 px-6 lg:px-0">
+          <div class="flex flex-col justify-start items-start xl:w-2/4">
+            <div>
+              <h2 class="text-gray-800 dark:text-white lg:text-3xl text-2xl font-bold leading-7">Detalles</h2>
+            </div>
+            <div class="mt-8">
+                <p class="text-gray-800 dark:text-white lg:text-base text-sm leading-normal">
+                    {{book.details}}
+                </p>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+  <!-- zzz -->  
+{% endblock %}

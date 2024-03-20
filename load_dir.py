@@ -1,28 +1,32 @@
-import os
+import json
 import re 
 import redis
 from bs4 import BeautifulSoup
+from jinja2 import Environment, FileSystemLoader
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
-
-def load_dir(path):
-    files = os.listdir(path)
-
-    # files = [f for f in files if re.search(r"")]
-    for f in files:
-        match = re.match(r'^book(\d+).html$', f)
-        if match is not None:
-            with open(path + f) as file:
-                html=file.read()
-                book_id=match.group(1)
-                create_index(book_id,html)
-                r.set(f"book:{book_id}",html)
-                print(f"{file} loaded into redis")
+env = Environment(loader=FileSystemLoader('html'), autoescape=True)
 
 def create_index(book_id, html):
     soup = BeautifulSoup(html, 'html.parser')
-    ts = soup.get_text().split(' ')
-    for t in ts:
-        r.sadd(t,book_id)
+    text = soup.get_text().split()
+    for word in text:
+        r.sadd(word, book_id)
 
-load_dir('html/books/')
+def load_books_from_json(json_path):
+    with open(json_path, 'r') as file:
+        books = json.load(file)
+    
+    for book in books:
+        template = env.get_template('/books/book.html')
+        html = template.render(book=book)
+        
+        # Guarda el HTML generado en Redis
+        r.set(f"book:{book['id']}", html)
+        
+        # Crea un índice para el libro
+        create_index(book['id'], html)
+        print(f"Book {book['title']} loaded into Redis")
+
+# Llamada a la función
+load_books_from_json('data_books.json')

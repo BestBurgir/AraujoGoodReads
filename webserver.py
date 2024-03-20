@@ -1,15 +1,26 @@
 from functools import cached_property
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import mimetypes
 from urllib.parse import parse_qsl, urlparse
 import redis
 import re
 import uuid
+import json
+import os
+from http import HTTPStatus
 # Código basado en:
 # https://realpython.com/python-http-server/
 # https://docs.python.org/3/library/http.server.html
 # https://docs.python.org/3/library/http.cookies.html
 
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+
+# Configuración de Jinja2
+env = Environment(
+    loader=FileSystemLoader('html'),
+    autoescape=select_autoescape(['html', 'xml'])
+)
 
 mappings = [
     (r"^/books/(?P<book_id>\d+)$", "get_book"),
@@ -54,7 +65,33 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Set-Cookie", cookies.output(header=""))
 
     def do_GET(self):
-        self.url_mapping_response()
+        if self.path.startswith('/public/'):
+            # Intenta servir archivos estáticos.
+            self.serve_static_file()
+        else:
+            self.url_mapping_response()
+
+    def serve_static_file(self):
+        # Construye la ruta al archivo estático, asumiendo que `public` está en la misma carpeta que tu script
+        root = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(root, self.path[1:])  # [1:] elimina la primera barra para evitar rutas absolutas
+
+        # Verifica si el archivo existe y es un archivo (no un directorio)
+        if os.path.exists(path) and os.path.isfile(path):
+            # Determina el tipo MIME para el encabezado Content-Type
+            mime_type, _ = mimetypes.guess_type(path)
+            mime_type = mime_type or 'application/octet-stream'
+
+            # Lee el archivo y lo envía
+            with open(path, 'rb') as file:
+                self.send_response(HTTPStatus.OK)
+                self.send_header('Content-Type', mime_type)  # Usa el tipo MIME correcto
+                self.end_headers()
+                self.wfile.write(file.read())
+        else:
+            self.send_response(HTTPStatus.NOT_FOUND)
+            self.end_headers()
+            self.wfile.write(b'Not Found')
 
     def url_mapping_response(self):
         for pattern, method in mappings:
@@ -78,9 +115,17 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.end_headers()
-        with open('html/index.html') as f:
-            response = f.read()
-        self.wfile.write(response.encode("utf-8"))   
+        
+        # Cargar la plantilla con Jinja2
+        template = env.get_template('index.html')
+
+        # Renderizar la plantilla con cualquier dato que quieras pasar
+        response = template.render(titulo='Página de Inicio')
+        self.wfile.write(response.encode("utf-8"))
+
+        # with open('html/index.html') as f:
+        #     response = f.read()
+        # self.wfile.write(response.encode("utf-8"))   
         # index_page = """
         # <h1>Bienvenidos a los Libros </h1>
         # <form action="/search" method="get">
@@ -90,29 +135,41 @@ class WebRequestHandler(BaseHTTPRequestHandler):
         # """.encode("utf-8")
         # self.wfile.write(index_page)
 
+    def load_books_from_json(self,json_path='data_books.json'):
+        with open(json_path, 'r', encoding='utf-8') as file:
+            books = json.load(file)
+        return books
+
     def get_by_search(self):
         if self.query_data and 'q' in self.query_data:
             booksInter = r.sinter(self.query_data['q'].split(' '))
-            lista = []
-
+            books_info = []
+            all_books = self.load_books_from_json()  # Carga todos los libros del JSON
             # print(booksInter)
             # Decodificar los resultados y agregarlos a la lista
             for b in booksInter:
-                y = b.decode()
-                lista.append(y)
-        
+                book_id = b.decode('utf-8')  # Decodifica el ID del libro
+                # Busca en el JSON la información del libro por su ID
+                book_data = next((book for book in all_books if book['id'] == book_id), None)
+                if book_data:
+                    books_info.append(book_data)
+
             # Si no se encontraron libros, redirigir a get_index
-            if not lista:
+            if not books_info:
                 self.index()
             else:
-                # Si se encontraron libros, procesar cada uno
-                for book in lista:
-                    self.get_book(book)
-
-        # Configurar la respuesta HTTP para indicar éxito
+                self.render_search_page(books_info)
+                    
+        
+    def render_search_page(self, books_info):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
+
+        # Asume que tienes un template 'search.html' listo para ser renderizado
+        template = env.get_template('search.html')
+        response = template.render(books=books_info)
+        self.wfile.write(response.encode("utf-8"))
 
 
     def get_recomendation(self,session_id, book_id):

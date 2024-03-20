@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Título por Defecto{% endblock %}</title>
+    <link href="/public/tailwind.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        {% include 'shared/navbar.html' %}
+    </header>
+
+    
+    {% block content %}
+    
+    
+
+    {% endblock %}
+
+    <footer>
+        
+    </footer>
+</body>
+</html>

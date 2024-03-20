@@ -1,0 +1,65 @@
+[
+  {
+    "id": "1",
+    "title": "El Principito",
+    "author": "Antoine de Saint-Exupéry",
+    "description": "Una historia sobre la importancia de la amistad y el descubrimiento personal.",
+    "year": "1943",
+    "url_img": "https://m.media-amazon.com/images/I/713nEf55PkL._AC_UF1000,1000_QL80_.jpg",
+    "details": "El \"Principito\" es una obra del escritor y aviador francés Antoine de Saint-Exupéry, publicada en 1943. Este libro, considerado un clásico de la literatura universal, narra la historia de un joven príncipe que viaja por diferentes planetas, incluido el nuestro, encontrándose con diversos personajes que simbolizan aspectos de la sociedad adulta. A través de sus encuentros y conversaciones, el Principito reflexiona sobre temas como la amistad, el amor, la soledad y el sentido de la vida. En su viaje, el Principito deja su pequeño planeta y su querida rosa para explorar el universo, buscando compañía y entendimiento. En la Tierra, se encuentra con un aviador varado en el desierto, con quien comparte sus experiencias y aprendizajes. Este encuentro entre el aviador y el Principito sirve como marco para contar las historias de los otros planetas y personajes, y refleja la propia vida del autor, sus aventuras y su filosofía de vida. A lo largo de la obra, Saint-Exupéry utiliza metáforas y simbolismos para criticar la pérdida de la inocencia y la imaginación en el mundo adulto, promoviendo valores como la lealtad, la amistad y el amor genuino. \"El Principito\" es una invitación a redescubrir el mundo a través de los ojos de un niño, valorando las cosas simples y esenciales que \"solo se ven bien con el corazón\". La obra ha sido traducida a más de 250 idiomas y dialectos, y sigue siendo una de las más leídas y queridas en todo el mundo."
+  },
+  {
+    "id": "2",
+    "title": "Cien años de soledad",
+    "author": "Gabriel García Márquez",
+    "description": "La épica historia de la familia Buendía en el pueblo ficticio de Macondo.",
+    "year": "1967",
+    "url_img": "https://m.media-amazon.com/images/I/91TvVQS7loL._AC_UF1000,1000_QL80_.jpg",
+    "details": "\"Cien años de soledad\", obra maestra de Gabriel García Márquez, publicada en 1967, es considerada una de las novelas más significativas de la literatura hispanoamericana del siglo XX. Este libro narra la historia de la familia Buendía a lo largo de siete generaciones en el ficticio pueblo de Macondo, ubicado en algún lugar de la geografía latinoamericana. La novela es famosa por su uso del realismo mágico, un estilo literario que introduce elementos fantásticos en la narrativa de manera natural, reflejando la realidad compleja y mágica de América Latina."
+  },
+  {
+    "id": "3",
+    "title": "Don Quijote de la Mancha",
+    "author": "Miguel de Cervantes",
+    "description": "Las aventuras del ingenioso hidalgo Don Quijote y su fiel escudero Sancho Panza.",
+    "year": "1605",
+    "url_img": "https://m.media-amazon.com/images/I/71kdJikvR4L._AC_UF1000,1000_QL80_.jpg",
+    "details": "Considerada una de las obras más importantes de la literatura española y la literatura universal, 'Don Quijote de la Mancha' narra las aventuras de Alonso Quijano, quien pierde la cordura por leer demasiados libros de caballería y decide convertirse en caballero andante bajo el nombre de Don Quijote. Acompañado por su escudero Sancho Panza, Don Quijote busca aventuras y lucha contra molinos de viento que confunde con gigantes, en un viaje lleno de humor, críticas a la sociedad y reflexiones sobre la realidad y la locura."
+  },
+  {
+    "id": "4",
+    "title": "La sombra del viento",
+    "author": "Carlos Ruiz Zafón",
+    "description": "Un misterioso libro conduce a Daniel Sempere a una aventura a través de la Barcelona de posguerra.",
+    "year": "2001",
+    "url_img": "https://m.media-amazon.com/images/I/61zOWUcvMbL._AC_UF894,1000_QL80_.jpg",
+    "details": "En el corazón de la Barcelona de posguerra, el joven Daniel Sempere descubre un libro maldito que cambia el curso de su vida y lo arrastra a un laberinto de intrigas y secretos enterrados en el alma oscura de la ciudad. 'La Sombra del Viento' es el primero de la serie 'El Cementerio de los Libros Olvidados', una mezcla magistral de géneros literarios que va desde la novela de aventuras hasta el thriller y el relato histórico. La historia se convierte en una metafórica exploración sobre el poder de los libros, la magia de la lectura y la lucha eterna entre el olvido y la memoria."
+  },
+  {
+    "id": "5",
+    "title": "1984",
+    "author": "George Orwell",
+    "description": "Una distopía sobre una sociedad vigilada por un régimen totalitario encabezado por el Gran Hermano.",
+    "year": "1949",
+    "url_img": "https://m.media-amazon.com/images/I/71rpa1-kyvL._AC_UF1000,1000_QL80_.jpg",
+    "details": "Publicada en 1949, '1984' es una de las novelas más influyentes del siglo XX, una advertencia sobre los peligros del totalitarismo y la vigilancia masiva. La historia sigue a Winston Smith, un empleado del Ministerio de la Verdad, en una Londres perteneciente al superestado de Oceanía, donde el Partido, liderado por el enigmático Gran Hermano, ejerce un control absoluto sobre la población, reescribiendo la historia y vigilando cada aspecto de la vida de los ciudadanos. '1984' explora temas como la manipulación de la verdad, la pérdida de la privacidad y la libertad individual, en un mundo donde el pensamiento crítico es castigado con la vaporización."
+  },
+  {
+    "id": "6",
+    "title": "El nombre del viento",
+    "author": "Patrick Rothfuss",
+    "description": "La primera parte de la Crónica del Asesino de Reyes, una historia de aventuras y magia contada por su protagonista, Kvothe.",
+    "year": "2007",
+    "url_img": "https://m.media-amazon.com/images/I/91PjnllfsxL._AC_UF1000,1000_QL80_.jpg",
+    "details": "Esta novela narra la vida de Kvothe, un aventurero, arcanista y músico extraordinario que cuenta la historia de su vida a un cronista en la posada que regenta bajo una identidad falsa. Desde su infancia en una troupe de artistas itinerantes, hasta los años de miseria en las calles de Tarbean y su ingreso a una prestigiosa universidad de magia, Kvothe busca respuestas sobre el misterioso asesinato de su familia y se adentra en una búsqueda que lo enfrenta a legendarios seres y poderosas fuerzas oscuras."
+  },
+  {
+    "id": "7",
+    "title": "Harry Potter y la piedra filosofal",
+    "author": "J.K. Rowling",
+    "description": "El inicio de la saga de Harry Potter, un joven que descubre su destino como mago en el mundo mágico.",
+    "year": "1997",
+    "url_img": "https://m.media-amazon.com/images/I/81iqZ2HHD-L._AC_UY218_.jpg",
+    "details": "Harry Potter, un niño huérfano, descubre en su undécimo cumpleaños que es un mago, al igual que sus padres, quienes murieron a manos del poderoso y malvado mago, Lord Voldemort. Harry es invitado a estudiar en el Colegio Hogwarts de Magia y Hechicería, donde hace nuevos amigos, aprende sobre magia y se enfrenta a numerosos desafíos. A lo largo del año, Harry y sus amigos descubren la existencia de la Piedra Filosofal, un objeto mágico con el poder de otorgar la inmortalidad, que Voldemort busca desesperadamente para recuperar su forma y poder. 'Harry Potter y la piedra filosofal' es el primer libro de una serie que se ha convertido en un fenómeno mundial, amado por lectores de todas las edades."
+  }
+]

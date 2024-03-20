@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}Librería{% endblock %}
+
+{% block content %}
+
+
+<div class="py-16 mx-auto container">
+    <h1 tabindex="0" class="focus:outline-none lg:text-5xl text-2xl text-center f-m-w text-indigo-700 font-bold">
+        Libros encontrados
+    </h1>
+    <div tabindex="0" aria-label="group of cards"
+        class="focus:outline-none py-8 h-full grid grid-cols-1 lg:grid-cols-3 items-center gap-4 justify-between xl:px-0 px-4">
+        {% for book in books %}
+            <div aria-label="card" tabindex="0" class="focus:outline-none h-full w-full lg:mr-8 lg:mb-0 mb-4 ">
+                <div class="w-full h-96 relative">
+                    <img tabindex="0" alt="{{ book.title }}" src="{{ book.url_img }}"
+                        class="focus:outline-none absolute w-full h-full inset-0 object-center object-cover z-10" />
+                </div>
+                <div class="mt-12">
+                    <h1 tabindex="0"
+                        class="focus:outline-none text-gray-800 dark:text-white text-2xl font-semibold leading-7">
+                        {{ book.title }}
+                    </h1>
+                    <p tabindex="0" class="focus:outline-none text-base text-gray-800 dark:text-white leading-loose mt-2">
+                        {{ book.description }}
+                    </p>
+                    <div class="mt-6">
+                        <a href="/books/{{ book.id }}" tabindex="0"
+                            class="focus:text-indigo-900 hover:text-indigo-900 focus:outline-none text-indigo-700 focus:underline cursor-pointer text-base font-semibold">
+                            Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
