@@ -178,7 +178,7 @@ class WebRequestHandler(BaseHTTPRequestHandler):
 
         books_read = {book.decode('utf-8').split(':')[1] for book in books}
 
-        all_books = {'1','2','3','4','5'}
+        all_books = {'1','2','3','4','5','6','7'}
 
         books_to_recommend = all_books-books_read
         if len(books_read)>=3:
